@@ -1,0 +1,32 @@
+###
+
+POST  http://127.0.0.1:8085
+Content-Type: application/json
+
+{
+  "url": "https://www.google.com/"
+}
+
+###
+
+### BAD URL
+
+POST  http://127.0.0.1:8085
+Content-Type: application/json
+
+{
+  "url": "google.com"
+}
+
+###
+
+### BAD URL
+
+POST  http://127.0.0.1:8085
+Content-Type: application/json
+
+{
+  "url": ""
+}
+
+###

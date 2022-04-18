@@ -1,4 +1,4 @@
-module scrapy
+module ContentScraper
 
 go 1.18
 

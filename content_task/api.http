@@ -1,0 +1,32 @@
+###
+
+POST  http://127.0.0.1:8081
+Content-Type: application/json
+
+{
+  "url": "https://google.com/"
+}
+
+### TODO  mongo dont work ->> после записи в моного scraper должен рапортовать об успехе в Rabbit -> написать парсер
+
+### BAD URL
+
+POST  http://127.0.0.1:8081
+Content-Type: application/json
+
+{
+  "url": "google.com"
+}
+
+###
+
+### BAD URL
+
+POST  http://127.0.0.1:8085
+Content-Type: application/json
+
+{
+  "url": ""
+}
+
+###

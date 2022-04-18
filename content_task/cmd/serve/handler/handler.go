@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"Producer/internal/producer"
+	"ContentTask/internal/content_task"
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"log"
@@ -10,12 +10,12 @@ import (
 )
 
 type Handler struct {
-	producer *producer.Producer
+	contentTask *content_task.ContentTask
 }
 
-func NewHandler(producer *producer.Producer) *Handler {
+func NewHandler(contentTask *content_task.ContentTask) *Handler {
 	return &Handler{
-		producer: producer,
+		contentTask: contentTask,
 	}
 }
 
@@ -40,6 +40,6 @@ func (h *Handler) sandUrl(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Bad url", http.StatusInternalServerError)
 		log.Println(err)
 	} else {
-		_ = h.producer.PublishURL(newURL.URL)
+		_ = h.contentTask.PublishURL(newURL.URL)
 	}
 }

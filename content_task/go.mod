@@ -1,4 +1,4 @@
-module Producer
+module ContentTask
 
 go 1.18
 

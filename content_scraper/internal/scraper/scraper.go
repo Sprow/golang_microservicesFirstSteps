@@ -1,4 +1,4 @@
-package scrap
+package scraper
 
 import (
 	"io"
@@ -16,7 +16,7 @@ func NewSiteScraper(c *http.Client) *SiteScraper {
 	}
 }
 
-func (s SiteScraper) GetData(url string) ([]byte, error) {
+func (s SiteScraper) GetContent(url string) ([]byte, error) {
 	var bodyBytes []byte
 	resp, err := s.client.Get(url)
 	defer resp.Body.Close()

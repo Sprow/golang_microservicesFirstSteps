@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Producer/cmd/serve/handler"
-	"Producer/internal/producer"
+	"ContentTask/cmd/serve/handler"
+	"ContentTask/internal/content_task"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"log"
@@ -18,7 +18,7 @@ func failOnError(err error, msg string) {
 }
 
 func main() {
-	conn, err := amqp.Dial("amqp://sprow:12345@localhost:5672/")
+	conn, err := amqp.Dial("amqp://sprow:12345@rabbitmq:5672/")
 	failOnError(err, "Failed to connect to rabbitmq")
 	defer conn.Close()
 
@@ -26,22 +26,23 @@ func main() {
 	failOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
-	_, err = ch.QueueDeclare( //declare a queue for us to send to
-		"urls", // name
-		false,  // durable
-		false,  // delete when unused
-		false,  // exclusive
-		false,  // no-wait
-		nil,    // arguments
+	err = ch.ExchangeDeclare(
+		"tasks_direct", // name
+		"direct",       // type
+		true,           // durable
+		false,          // auto-deleted
+		false,          // internal
+		false,          // no-wait
+		nil,            // arguments
 	)
-	failOnError(err, "Failed to declare a queue")
+	failOnError(err, "Failed to declare an exchange")
 
 	router := chi.NewRouter()
-	p := producer.NewProducer(ch)
+	p := content_task.NewContentTask(ch)
 	h := handler.NewHandler(p)
 	h.Register(router)
 
-	err = http.ListenAndServe(":8085", router)
+	err = http.ListenAndServe(":8081", router)
 	if err != nil {
 		fmt.Println(err)
 	}

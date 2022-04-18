@@ -21,7 +21,7 @@ type siteData struct {
 	Data []byte             `bson:"data"`
 }
 
-func (db *MongoDB) SaveData(ctx context.Context, data []byte) error {
+func (db *MongoDB) SaveContent(ctx context.Context, data []byte) error {
 	d := siteData{
 		ID:   primitive.NewObjectID(),
 		Data: data,

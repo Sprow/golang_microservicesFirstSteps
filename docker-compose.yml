@@ -48,5 +48,19 @@ services:
     ports:
       - "8082:8082"
 
+  content_parser:
+    restart: always
+    build:
+      context: ./content_parser
+      dockerfile: Dockerfile
+    depends_on:
+      - "db"
+      - "rabbitmq"
+      - "content_scraper"
+    networks:
+      - default
+    ports:
+      - "8083:8083"
+
 volumes:
   data:

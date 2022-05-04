@@ -6,17 +6,17 @@ import (
 	"net/http"
 )
 
-type SiteScraper struct {
+type ContentScraper struct {
 	client *http.Client
 }
 
-func NewSiteScraper(c *http.Client) *SiteScraper {
-	return &SiteScraper{
+func NewContentScraper(c *http.Client) *ContentScraper {
+	return &ContentScraper{
 		client: c,
 	}
 }
 
-func (s SiteScraper) GetContent(url string) ([]byte, error) {
+func (s ContentScraper) GetContent(url string) ([]byte, error) {
 	var bodyBytes []byte
 	resp, err := s.client.Get(url)
 	defer resp.Body.Close()

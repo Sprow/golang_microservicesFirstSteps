@@ -5,10 +5,9 @@ import (
 	"ContentTask/internal/content_task"
 	"fmt"
 	"github.com/go-chi/chi/v5"
+	"github.com/streadway/amqp"
 	"log"
 	"net/http"
-
-	"github.com/streadway/amqp"
 )
 
 func failOnError(err error, msg string) {
@@ -17,9 +16,24 @@ func failOnError(err error, msg string) {
 	}
 }
 
+//func connectRabbitMQ(conn *amqp.Connection) {
+//	for i := 0; i < 20; i++ {
+//		time.Sleep(2 * time.Second)
+//		var err error
+//		conn, err = amqp.Dial("amqp://sprow:12345@rabbitmq:5672/")
+//		if err == nil {
+//			break
+//		}
+//		failOnError(err, "Failed to connect to RabbitMQ")
+//	}
+//}
+
 func main() {
-	conn, err := amqp.Dial("amqp://sprow:12345@rabbitmq:5672/")
+	//conn, err := amqp.Dial("amqp://sprow:12345@localhost:5672/") // local use
+	conn, err := amqp.Dial("amqp://sprow:12345@rabbitmq:5672/") // docker container
 	failOnError(err, "Failed to connect to rabbitmq")
+	//var conn *amqp.Connection
+	//connectRabbitMQ(conn)
 	defer conn.Close()
 
 	ch, err := conn.Channel()

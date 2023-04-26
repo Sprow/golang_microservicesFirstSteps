@@ -9,3 +9,5 @@ Save site content in mongodb and sent new task (oid) to parser_direct Queue
 
 content_parser get oid in RabbitMQ --> make api call to content_scraper
 to get scraped content --> parse --> save result in mongo
+
+Test

@@ -97,7 +97,7 @@ func main() {
 		false, // auto-ack
 		false, // exclusive
 		false, // no-local
-		false, // no-wait
+		true,  // no-wait
 		nil,   // args
 	)
 	failOnError(err, "Failed to register a consumer1")

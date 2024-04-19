@@ -3,12 +3,12 @@ module ContentScraper
 go 1.18
 
 require (
+	github.com/go-chi/chi/v5 v5.0.7
 	github.com/streadway/amqp v1.0.0
 	go.mongodb.org/mongo-driver v1.9.0
 )
 
 require (
-	github.com/go-chi/chi/v5 v5.0.7 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect

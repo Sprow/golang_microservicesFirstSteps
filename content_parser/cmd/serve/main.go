@@ -5,6 +5,7 @@ import (
 	"content_parser/internal/parser"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/streadway/amqp"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -40,7 +41,7 @@ func getContentBody(id amqp.Delivery) ([]byte, error) {
 	return content.Html, err
 }
 
-//func connectRabbitMQ(conn *amqp.Connection) {
+// func connectRabbitMQ(conn *amqp.Connection) {
 //	for i := 0; i < 20; i++ {
 //		time.Sleep(2 * time.Second)
 //		var err error
@@ -50,7 +51,7 @@ func getContentBody(id amqp.Delivery) ([]byte, error) {
 //		}
 //		failOnError(err, "Failed to connect to RabbitMQ")
 //	}
-//}
+// }
 
 func main() {
 	conn, err := amqp.Dial("amqp://sprow:12345@rabbitmq:5672/")
@@ -99,11 +100,11 @@ func main() {
 		false, // no-wait
 		nil,   // args
 	)
-	failOnError(err, "Failed to register a consumer")
+	failOnError(err, "Failed to register a consumer1")
 
 	// mongoDB
 	ctx := context.Background()
-	//client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017")) // use for localhost
+	// client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017")) // use for localhost
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://db:27017")) // for docker run
 	if err != nil {
 		log.Println(err)
@@ -116,7 +117,7 @@ func main() {
 		for id := range IDs {
 			content, err := getContentBody(id)
 			if err != nil {
-				log.Println(err)
+				log.Println(fmt.Errorf("get content body: %w", err))
 				return
 			}
 			err = p.ParseAndSave(content)

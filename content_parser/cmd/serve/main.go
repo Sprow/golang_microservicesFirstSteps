@@ -96,7 +96,7 @@ func main() {
 		"",    // consumer
 		false, // auto-ack
 		false, // exclusive
-		false, // no-local
+		true,  // no-local
 		true,  // no-wait
 		nil,   // args
 	)
